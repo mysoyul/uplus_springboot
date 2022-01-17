@@ -3,6 +3,7 @@ package com.uplus.msa.repository;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,7 @@ public class CustomerRepositoryTest {
 		repository.save(customer2);
 	}
 	
-	@Test
+	@Test @Disabled
 	public void customer_finder() {
 		Optional<Customer> optional = repository.findById(2L);
 		
@@ -58,10 +59,24 @@ public class CustomerRepositoryTest {
 		});
 		
 		//Lambda expression
-		custList.forEach(cust -> System.out.println(cust));
+		custList.forEach(cust -> System.out.println(">>>" + cust));
 		
 		//Method Reference
-		custList.forEach(System.out::println);
+		custList.forEach(System.out::println);		
 	}
+	
+	@Test
+	public void name_list() {
+		//List<Customer> --> List<String> name 리스트
+		List<String> nameList = repository.findAll() //List<Customer>
+				  .stream()  //Stream<Customer>
+				  //map(Function)  R apply(T t)
+				  .map(cust -> cust.getName())  //Stream<String>
+				  .collect(Collectors.toList()); //List<String>
+		
+		nameList.forEach(System.out::println);
+	}
+	
+	
 	
 }
