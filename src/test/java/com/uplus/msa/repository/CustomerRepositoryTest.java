@@ -3,7 +3,8 @@ package com.uplus.msa.repository;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
+//static import 
+import static java.util.stream.Collectors.toList;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ public class CustomerRepositoryTest {
 	@Autowired
 	private CustomerRepository repository;
 	
-	@Test //@Disabled
+	@Test @Disabled
 	public void customer() {
 		Customer customer = new Customer();
 		customer.setName("유플러스2");
@@ -65,18 +66,33 @@ public class CustomerRepositoryTest {
 		custList.forEach(System.out::println);		
 	}
 	
-	@Test
+	@Test @Disabled
 	public void name_list() {
 		//List<Customer> --> List<String> name 리스트
 		List<String> nameList = repository.findAll() //List<Customer>
 				  .stream()  //Stream<Customer>
 				  //map(Function)  R apply(T t)
 				  .map(cust -> cust.getName())  //Stream<String>
-				  .collect(Collectors.toList()); //List<String>
+				  .collect(toList()); //List<String>
 		
 		nameList.forEach(System.out::println);
 	}
 	
+	
+	@Test
+	public void addr_list() {
+		//id값이 3보다 큰 Customer들의 주소 리스트를 출력
+		List<String> addrList = repository.findAll()  //List<Customer>
+				  .stream()	  //Stream<Customer>
+				  //filter(Predicate) boolean test(T t)
+				  .filter(cust -> cust.getId() >= 3L) //Stream<Customer>
+				  //map(Function)  R apply(T t)
+				  //.map(cust -> cust.getAddress())
+				  .map(Customer::getAddress) //Stream<String>
+				  .collect(toList());	//List<String>
+		
+		addrList.forEach(System.out::println);
+	}
 	
 	
 }
