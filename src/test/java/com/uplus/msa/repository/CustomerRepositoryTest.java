@@ -72,14 +72,14 @@ public class CustomerRepositoryTest {
 		custList.forEach(System.out::println);		
 	}
 	
-	@Test @Disabled
+	@Test //@Disabled
 	public void name_list() {
 		//List<Customer> --> List<String> name 리스트
 		List<String> nameList = repository.findAll() //List<Customer>
 				  .stream()  //Stream<Customer>
 				  //map(Function)  R apply(T t)
 				  .map(cust -> cust.getName())  //Stream<String>
-				  .collect(toList()); //List<String>
+				  .collect(toList()); //List<String> MapString>
 		
 		nameList.forEach(System.out::println);
 	}

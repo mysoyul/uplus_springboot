@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.uplus.msa.dto.CustomerDTO;
+import com.uplus.msa.entity.Customer;
 import com.uplus.msa.repository.CustomerRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -25,14 +26,21 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public List<CustomerDTO> getAllCustomers() throws Exception {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public CustomerDTO getCustomerById(Long id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Customer customer = repository.findById(id).orElseGet(() -> new Customer());
+		//1.직접매핑하기
+		CustomerDTO customerDTO = CustomerDTO.builder()
+					.id(customer.getId())
+					.name(customer.getName())
+					.address(customer.getAddress())
+					.build();
+		return customerDTO;
 	}
 
+	
 }
