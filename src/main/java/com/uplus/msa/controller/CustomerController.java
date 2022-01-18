@@ -18,7 +18,10 @@ public class CustomerController {
 	private final CustomerService service;
 
 	@GetMapping("/{id}")
+	//http://localhost:8087/customers/1
 	public CustomerDTO getCustomer(@PathVariable Long id) throws Exception {
 		return service.getCustomerById(id);
 	}
+	
+	
 }

@@ -2,7 +2,7 @@ package com.uplus.msa.service;
 
 import java.util.List;
 
-
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,11 +34,14 @@ public class CustomerServiceImpl implements CustomerService {
 	public CustomerDTO getCustomerById(Long id) throws Exception {
 		Customer customer = repository.findById(id).orElseGet(() -> new Customer());
 		//1.직접매핑하기
-		CustomerDTO customerDTO = CustomerDTO.builder()
-					.id(customer.getId())
-					.name(customer.getName())
-					.address(customer.getAddress())
-					.build();		
+//		CustomerDTO customerDTO = CustomerDTO.builder()
+//					.id(customer.getId())
+//					.name(customer.getName())
+//					.address(customer.getAddress())
+//					.build();		
+		//2.BeanUtils의 copyProperties() 사용
+		CustomerDTO customerDTO = new CustomerDTO();
+		BeanUtils.copyProperties(customer, customerDTO);
 		return customerDTO;
 	}
 
