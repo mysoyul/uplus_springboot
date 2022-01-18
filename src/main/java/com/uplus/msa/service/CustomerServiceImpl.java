@@ -2,6 +2,7 @@ package com.uplus.msa.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -32,16 +33,20 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<CustomerDTO> getAllCustomers() throws Exception {
 		List<Customer> customerList = repository.findAll();
 		//1. 직접매핑하기
-		List<CustomerDTO> dtoList = new ArrayList<>();
-		for (Customer customer : customerList) {
-			CustomerDTO customerDTO = CustomerDTO.builder()
-				.id(customer.getId())
-				.name(customer.getName())
-				.address(customer.getAddress())
-			.build();
-			dtoList.add(customerDTO);
-		}
+//		List<CustomerDTO> dtoList = new ArrayList<>();
+//		for (Customer customer : customerList) {
+//			CustomerDTO customerDTO = CustomerDTO.builder()
+//				.id(customer.getId())
+//				.name(customer.getName())
+//				.address(customer.getAddress())
+//			.build();
+//			dtoList.add(customerDTO);
+//		}
 		
+		//2.Stream과 BeanUtils 사용하여 매핑하기
+		List<CustomerDTO> dtoList = customerList.stream() //Stream<Customer>
+					.map(cust -> AppUtils.entityToDto(cust)) //Stream<CustomerDTO>
+					.collect(Collectors.toList());
 		return dtoList;
 	}
 
