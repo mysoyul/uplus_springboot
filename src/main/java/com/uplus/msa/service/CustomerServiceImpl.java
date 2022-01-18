@@ -144,4 +144,25 @@ public class CustomerServiceImpl implements CustomerService {
 		CustomerDTO customerDTO = modelMapper.map(updatedCustomer, CustomerDTO.class);
 		return ResponseEntity.ok(customerDTO);
 	}
+	
+	@Override
+	@Transactional
+	public ResponseEntity<?> deleteCustomer(Long id) throws Exception {
+		//id로 조회
+		Optional<Customer> optional = repository.findById(id);
+		//없으면 404
+		if(!optional.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(id + " customer not found");
+		}
+		
+		//repository.delete(optional.get())
+		repository.deleteById(id);
+		
+		List<CustomerDTO> dtoList = repository.findAll().stream()
+							.map(cust -> modelMapper.map(cust, CustomerDTO.class))
+							.collect(Collectors.toList());
+		
+		return ResponseEntity.ok(dtoList);
+	}
+	
 }

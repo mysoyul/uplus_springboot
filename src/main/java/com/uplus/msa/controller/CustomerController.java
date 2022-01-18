@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,5 +61,10 @@ public class CustomerController {
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) throws Exception {
 		return service.updateCustomer(id, customerDTO);
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteCustomer(@PathVariable Long id) throws Exception {
+		return service.deleteCustomer(id);
 	}
 }

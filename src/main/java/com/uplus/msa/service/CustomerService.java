@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.uplus.msa.dto.CustomerDTO;
 
@@ -23,6 +24,8 @@ public interface CustomerService {
 	List<CustomerDTO> getCustomersPaing(Pageable pageable) throws Exception;
 
 	ResponseEntity<?> updateCustomer(Long id, CustomerDTO dto) throws Exception;
+
+	ResponseEntity<?> deleteCustomer(Long id) throws Exception;
 	
 	
 }
