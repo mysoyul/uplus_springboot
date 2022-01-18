@@ -1,5 +1,7 @@
 package com.uplus.msa.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,13 @@ public class CustomerController {
 	public CustomerDTO getCustomer(@PathVariable Long id) throws Exception {
 		return service.getCustomerById(id);
 	}
+	
+	
+	@GetMapping
+	public List<CustomerDTO> getAllCustomers() throws Exception {
+		return service.getAllCustomers();
+	}
+	
 	
 	
 }
