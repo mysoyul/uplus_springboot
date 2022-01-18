@@ -42,6 +42,8 @@ public class CustomerServiceImpl implements CustomerService {
 		//2.BeanUtils의 copyProperties() 사용
 		CustomerDTO customerDTO = new CustomerDTO();
 		BeanUtils.copyProperties(customer, customerDTO);
+		
+		
 		return customerDTO;
 	}
 
