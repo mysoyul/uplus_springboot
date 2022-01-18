@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.uplus.msa.dto.CustomerDTO;
 import com.uplus.msa.entity.Customer;
 import com.uplus.msa.repository.CustomerRepository;
+import com.uplus.msa.util.AppUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,9 +41,10 @@ public class CustomerServiceImpl implements CustomerService {
 //					.address(customer.getAddress())
 //					.build();		
 		//2.BeanUtils의 copyProperties() 사용
-		CustomerDTO customerDTO = new CustomerDTO();
-		BeanUtils.copyProperties(customer, customerDTO);
+//		CustomerDTO customerDTO = new CustomerDTO();
+//		BeanUtils.copyProperties(customer, customerDTO);
 		
+		CustomerDTO customerDTO = AppUtils.entityToDto(customer);
 		
 		return customerDTO;
 	}
