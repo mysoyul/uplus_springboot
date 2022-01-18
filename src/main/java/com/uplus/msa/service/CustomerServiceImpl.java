@@ -124,4 +124,24 @@ public class CustomerServiceImpl implements CustomerService {
 		return savedCustomer.getId();
 	}
 	
+	@Override
+	@Transactional
+	public ResponseEntity<?> updateCustomer(Long id, CustomerDTO dto) throws Exception {
+		//id로 조회
+		Optional<Customer> optional = repository.findById(id);
+		//없으면 404
+		if(!optional.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(id + " customer not found");
+		}
+		//있으면 입력받은 수정데이터를 엔티티로 매핑
+		Customer customer = optional.get();
+		customer.setName(dto.getName());
+		customer.setAddress(dto.getAddress());
+		//수정처리
+		Customer updatedCustomer = repository.save(customer);
+		
+		//수정된 엔티티를 DTO로 매핑
+		CustomerDTO customerDTO = modelMapper.map(updatedCustomer, CustomerDTO.class);
+		return ResponseEntity.ok(customerDTO);
+	}
 }

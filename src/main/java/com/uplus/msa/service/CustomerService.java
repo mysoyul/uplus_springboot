@@ -21,6 +21,8 @@ public interface CustomerService {
 	List<CustomerDTO> getCustomerByIdList(List<Long> ids) throws Exception;
 
 	List<CustomerDTO> getCustomersPaing(Pageable pageable) throws Exception;
+
+	ResponseEntity<?> updateCustomer(Long id, CustomerDTO dto) throws Exception;
 	
 	
 }

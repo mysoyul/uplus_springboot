@@ -2,10 +2,12 @@ package com.uplus.msa.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,9 +47,18 @@ public class CustomerController {
 	}
 	
 	
+	@GetMapping("/paging")
+	public List<CustomerDTO> getCustomersPaing(Pageable pageable) throws Exception {
+		return service.getCustomersPaing(pageable);
+	}
+	
 	@PostMapping
 	public Long createCustomer(@RequestBody CustomerDTO customerDTO) throws Exception {
 		return service.createCustomer(customerDTO);
 	}
 	
+	@PutMapping("/{id}")
+	public ResponseEntity<?> updateCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) throws Exception {
+		return service.updateCustomer(id, customerDTO);
+	}
 }
