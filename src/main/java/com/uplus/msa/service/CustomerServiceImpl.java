@@ -1,4 +1,4 @@
-package com.uplus.msa.entity;
+package com.uplus.msa.service;
 
 import java.util.List;
 
@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.uplus.msa.dto.CustomerDTO;
 import com.uplus.msa.repository.CustomerRepository;
-import com.uplus.msa.service.CustomerService;
 
 import lombok.RequiredArgsConstructor;
 

@@ -34,9 +34,9 @@ public class CustomerRepositoryTest {
 		repository.save(customer2);
 	}
 	
-	@Test @Disabled
+	@Test //@Disabled
 	public void customer_finder() {
-		Optional<Customer> optional = repository.findById(2L);
+		Optional<Customer> optional = repository.findById(20L);
 		
 		if(optional.isPresent()) {
 			Customer customer = optional.get();
@@ -46,6 +46,12 @@ public class CustomerRepositoryTest {
 		Customer customer2 = optional.orElse(new Customer());
 		System.out.println(customer2);
 		
+		//orElseGet(Supplier) T get()
+		customer2 = optional.orElseGet(() -> new Customer());
+		
+		//orElseThrow
+		customer2 = optional.orElseThrow(() -> new RuntimeException("Customer Not Found"));
+		System.out.println(customer2);
 		
 		Customer customer3 = repository.findByName("유플러스").orElse(new Customer());
 		System.out.println(customer3);
@@ -79,7 +85,7 @@ public class CustomerRepositoryTest {
 	}
 	
 	
-	@Test
+	@Test @Disabled
 	public void addr_list() {
 		//id값이 3보다 큰 Customer들의 주소 리스트를 출력
 		List<String> addrList = repository.findAll()  //List<Customer>
