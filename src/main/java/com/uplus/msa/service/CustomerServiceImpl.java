@@ -12,7 +12,7 @@ import com.uplus.msa.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 	

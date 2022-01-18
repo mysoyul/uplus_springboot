@@ -34,7 +34,7 @@ public class CustomerRepositoryTest {
 		repository.save(customer2);
 	}
 	
-	@Test //@Disabled
+	@Test @Disabled
 	public void customer_finder() {
 		Optional<Customer> optional = repository.findById(20L);
 		
