@@ -2,10 +2,13 @@ package com.uplus.msa.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,6 +81,21 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		return customerDTO;
 	}
+	
+	
+	@Override
+	public ResponseEntity<?> getCustomerByIdRE(Long id) throws Exception {
+		Optional<Customer> optional = repository.findById(id);
+		//id와 매핑되는 Customer가 없다면 404
+		if (!optional.isPresent()) {
+			//return ResponseEntity.notFound().build();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		Customer customer = optional.get();
+		CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
+		return ResponseEntity.ok(customerDTO);
+	}
+	
 
 	@Transactional
 	@Override

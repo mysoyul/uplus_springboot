@@ -2,6 +2,8 @@ package com.uplus.msa.service;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import com.uplus.msa.dto.CustomerDTO;
 
 public interface CustomerService {
@@ -12,6 +14,8 @@ public interface CustomerService {
 	public CustomerDTO getCustomerById(Long id) throws Exception;
 
 	Long createCustomer(CustomerDTO custDTO) throws Exception;
+
+	ResponseEntity<?> getCustomerByIdRE(Long id) throws Exception;
 	
 	
 }
