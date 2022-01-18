@@ -38,7 +38,7 @@ public class CustomerServiceImpl implements CustomerService {
 					.id(customer.getId())
 					.name(customer.getName())
 					.address(customer.getAddress())
-					.build();
+					.build();		
 		return customerDTO;
 	}
 
