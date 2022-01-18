@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -104,6 +106,14 @@ public class CustomerServiceImpl implements CustomerService {
 						.collect(Collectors.toList()); //List<CustomerDTO>						
 	}
 	
+	
+	@Override
+	public List<CustomerDTO> getCustomersPaing(Pageable pageable) throws Exception {
+		Page<Customer> customerPage = repository.findAll(pageable);
+		return customerPage.get() //Stream<Customer>
+						   .map(cust -> modelMapper.map(cust, CustomerDTO.class)) //Stream<CustomerDTO>
+						   .collect(Collectors.toList());						   
+	}
 
 	@Transactional
 	@Override
