@@ -1,7 +1,9 @@
 package com.uplus.msa.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class CustomerServiceImpl implements CustomerService {
 	
 	private final CustomerRepository repository;
+	private final ModelMapper modelMapper;
 	
 	//constructor injection
 //	public CustomerServiceImpl(CustomerRepository repository) {
@@ -27,8 +30,19 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public List<CustomerDTO> getAllCustomers() throws Exception {
+		List<Customer> customerList = repository.findAll();
+		//1. 직접매핑하기
+		List<CustomerDTO> dtoList = new ArrayList<>();
+		for (Customer customer : customerList) {
+			CustomerDTO customerDTO = CustomerDTO.builder()
+				.id(customer.getId())
+				.name(customer.getName())
+				.address(customer.getAddress())
+			.build();
+			dtoList.add(customerDTO);
+		}
 		
-		return null;
+		return dtoList;
 	}
 
 	@Override
@@ -40,11 +54,15 @@ public class CustomerServiceImpl implements CustomerService {
 //					.name(customer.getName())
 //					.address(customer.getAddress())
 //					.build();		
+		
 		//2.BeanUtils의 copyProperties() 사용
 //		CustomerDTO customerDTO = new CustomerDTO();
 //		BeanUtils.copyProperties(customer, customerDTO);
 		
-		CustomerDTO customerDTO = AppUtils.entityToDto(customer);
+//		CustomerDTO customerDTO = AppUtils.entityToDto(customer);
+		
+		//3. ModelMapper(외부라이브러리)의 map() 사용
+		CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
 		
 		return customerDTO;
 	}
