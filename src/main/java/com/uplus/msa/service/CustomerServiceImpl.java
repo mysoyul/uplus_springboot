@@ -44,8 +44,15 @@ public class CustomerServiceImpl implements CustomerService {
 //		}
 		
 		//2.Stream과 BeanUtils 사용하여 매핑하기
+/*		
 		List<CustomerDTO> dtoList = customerList.stream() //Stream<Customer>
-					.map(cust -> AppUtils.entityToDto(cust)) //Stream<CustomerDTO>
+					//.map(cust -> AppUtils.entityToDto(cust)) //Stream<CustomerDTO>
+					.map(AppUtils::entityToDto)
+					.collect(Collectors.toList());
+*/					
+		//3.Stream과 ModelMapper 사용하여 매핑하기
+		List<CustomerDTO> dtoList = customerList.stream() //Stream<Customer>
+					.map(cust -> modelMapper.map(cust, CustomerDTO.class)) //Stream<CustomerDTO>
 					.collect(Collectors.toList());
 		return dtoList;
 	}
@@ -72,5 +79,13 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerDTO;
 	}
 
+	@Transactional
+	@Override
+	public Long createCustomer(CustomerDTO custDTO) throws Exception {
+		//CustomerDTO -> Customer 매핑
+		Customer entity = modelMapper.map(custDTO, Customer.class);
+		Customer savedCustomer = repository.save(entity);
+		return savedCustomer.getId();
+	}
 	
 }

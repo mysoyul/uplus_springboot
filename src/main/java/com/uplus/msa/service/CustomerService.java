@@ -10,6 +10,8 @@ public interface CustomerService {
 	
 	//Customer 하나 조회
 	public CustomerDTO getCustomerById(Long id) throws Exception;
+
+	Long createCustomer(CustomerDTO custDTO) throws Exception;
 	
 	
 }
