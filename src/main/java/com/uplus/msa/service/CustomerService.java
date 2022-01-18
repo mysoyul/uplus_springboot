@@ -16,6 +16,8 @@ public interface CustomerService {
 	Long createCustomer(CustomerDTO custDTO) throws Exception;
 
 	ResponseEntity<?> getCustomerByIdRE(Long id) throws Exception;
+
+	List<CustomerDTO> getCustomerByIdList(List<Long> ids) throws Exception;
 	
 	
 }

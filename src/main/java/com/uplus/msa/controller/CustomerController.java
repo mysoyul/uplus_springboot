@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uplus.msa.dto.CustomerDTO;
@@ -37,6 +38,12 @@ public class CustomerController {
 	public List<CustomerDTO> getAllCustomers() throws Exception {
 		return service.getAllCustomers();
 	}
+	
+	@GetMapping("/ids")
+	public List<CustomerDTO> getAllCustomerById(@RequestParam("id") List<Long> ids) throws Exception {
+		return service.getCustomerByIdList(ids);
+	}
+	
 	
 	@PostMapping
 	public Long createCustomer(@RequestBody CustomerDTO customerDTO) throws Exception {

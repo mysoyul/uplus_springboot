@@ -96,11 +96,12 @@ public class CustomerServiceImpl implements CustomerService {
 		return ResponseEntity.ok(customerDTO);
 	}
 	
+	@Override
 	public List<CustomerDTO> getCustomerByIdList(List<Long> ids) throws Exception {
-		return repository.findByIdIn(ids)
+		return repository.findByIdIn(ids) //List<Customer>
 						.stream()	//Stream<Customer>
-						.map(cust -> modelMapper.map(cust, CustomerDTO.class)) //Stream<Customer>
-						.collect(Collectors.toList()); //List<Customer>						
+						.map(cust -> modelMapper.map(cust, CustomerDTO.class)) //Stream<CustomerDTO>
+						.collect(Collectors.toList()); //List<CustomerDTO>						
 	}
 	
 
